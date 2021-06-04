@@ -47,4 +47,9 @@ char csget(const String* self, size_t index);
 /* @param index index in char array */
 void csset(const String* self, char item, size_t index);
 
+/* copy of string */
+/* @param self string container */
+/* @return cloned string */
+String* csclone(const String* self);
+
 #endif

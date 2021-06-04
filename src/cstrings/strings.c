@@ -50,6 +50,11 @@ void csset(const String* self, char item, size_t index)
     self->raw[index] = item;
 }
 
+String* csclone(const String* self)
+{
+    return cscreate(self->raw);
+}
+
 void csfree(String* self)
 {
     if (self)

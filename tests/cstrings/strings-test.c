@@ -65,3 +65,14 @@ CTEST(strings, get)
     }
     csfree(s);
 }
+
+CTEST(strings, clone)
+{
+    char raw[] = "test";
+    String* s = cscreate(raw);
+    String* clone = csclone(s);
+    ASSERT_STR(csraw(clone), csraw(s));
+    ASSERT_EQUAL(cslength(s), cslength(clone));
+    csfree(s);
+    csfree(clone);
+}
