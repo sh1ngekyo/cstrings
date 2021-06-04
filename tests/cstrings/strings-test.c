@@ -222,3 +222,33 @@ CTEST(strings, replace)
     cs_free(replaced);
     cs_free(str);
 }
+
+CTEST(strings, split)
+{
+    String* str = cs_create("test test test test");
+    String** container = NULL;
+    size_t length = cs_split(str, " ", &container);
+    for (size_t i = 0; i < length; ++i)
+    {
+        ASSERT_STR("test", cs_raw(container[i]));
+        cs_free(container[i]);
+    }
+    free(container);
+    container = NULL;
+    length = cs_split(str, "", &container);
+    for (size_t i = 0; i < length; ++i)
+    {
+        ASSERT_STR(cs_raw(str), cs_raw(container[i]));
+        cs_free(container[i]);
+    }
+    free(container);
+    container = NULL;
+    length = cs_split(str, "123", &container);
+    for (size_t i = 0; i < length; ++i)
+    {
+        ASSERT_STR(cs_raw(str), cs_raw(container[i]));
+        cs_free(container[i]);
+    }
+    free(container);
+    cs_free(str);
+}

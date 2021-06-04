@@ -217,6 +217,20 @@ String* cs_replace(String* str, const char* old_value, const char* new_value)
     return out;
 }
 
+size_t cs_split(const String* str, const char* pattern, String*** container)
+{
+    char* copy = malloc(str->length + 1);
+    memcpy(copy, str->raw, str->length + 1);
+    size_t length = 0;
+    for (char* substr = strtok(copy, pattern); substr != NULL; substr = strtok(NULL, pattern))
+    {
+        *container = realloc(*container, sizeof(String*) * (++length));
+        (*container)[length - 1] = cs_create(substr);
+    }
+    free(copy);
+    return length;
+}
+
 void cs_free(String* self)
 {
     if (self)

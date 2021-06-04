@@ -108,8 +108,16 @@ void cs_remove_all(String* str, size_t index);
 
 /* replace substring on new substring */
 /* @param str string */
-/* @param index position to remove */
+/* @param old_value old substring */
+/* @param new_value new substring */
 /* @return replaced string */
 String* cs_replace(String* str, const char* old_value, const char* new_value);
+
+/* split string in array of strings by pattern */
+/* @param str string */
+/* @param pattern array of delimeters */
+/* @param container address of string array */
+/* @return length of container after split original string */
+size_t cs_split(const String* str, const char* pattern, String*** container);
 
 #endif
