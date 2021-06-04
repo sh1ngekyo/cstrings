@@ -19,22 +19,22 @@ static void expand_str_data(String* str, const size_t size)
 
 size_t cs_length(const String* self)
 {
-    return self->length;
+    return self ? self->length : 0;
 }
 
 size_t cs_capacity(const String* self)
 {
-    return self->capacity;
+    return self ? self->capacity : 0;
 }
 
 const char* cs_raw(const String* self)
 {
-    return self->raw;
+    return self ? self->raw : NULL;
 }
 
 char cs_get(const String* self, size_t index)
 {
-    if (index >= self->length)
+    if (!self || index >= self->length)
     {
         return -1;
     }
@@ -43,7 +43,7 @@ char cs_get(const String* self, size_t index)
 
 void cs_set(const String* self, char item, size_t index)
 {
-    if (index >= self->length)
+    if (!self || index >= self->length)
     {
         return;
     }
@@ -52,16 +52,28 @@ void cs_set(const String* self, char item, size_t index)
 
 String* cs_clone(const String* self)
 {
+    if (!self)
+    {
+        return NULL;
+    }
     return cs_create(self->raw);
 }
 
 int64_t cs_compare(const String* str, const char* raw, bool ignore_case)
 {
+    if (!str)
+    {
+        return -1;
+    }
     return ignore_case ? strcasecmp(str->raw, raw) : strcmp(str->raw, raw);
 }
 
 void cs_concat(String* str, const char* raw)
 {
+    if (!str)
+    {
+        return;
+    }
     if (str->length + strlen(raw) + 1 >= str->capacity)
     {
         expand_str_data(str, (str->length + strlen(raw) + 1) * 2);
@@ -72,17 +84,29 @@ void cs_concat(String* str, const char* raw)
 
 bool cs_contains(String* str, const char* value)
 {
+    if (!str)
+    {
+        return false;
+    }
     return strstr(str->raw, value) ? true : false;
 }
 
 int64_t cs_indexof(String* str, const char* value)
 {
+    if (!str)
+    {
+        return -1;
+    }
     int64_t result = strstr(str->raw, value) - str->raw;
     return result >= 0 ? result : -1;
 }
 
 int64_t cs_indexof_last(String* str, const char* value)
 {
+    if (!str)
+    {
+        return -1;
+    }
     int64_t result = -1;
     char* current_substr = str->raw;
     while ((current_substr = strstr(current_substr, value)) != NULL)
@@ -91,6 +115,27 @@ int64_t cs_indexof_last(String* str, const char* value)
         current_substr += strlen(value);
     }
     return result;
+}
+
+int64_t cs_indexof_any(String* str, const char* value, size_t start_index)
+{
+    if (!str)
+    {
+        return -1;
+    }
+    int64_t result = -1;
+    char* current_substr = str->raw;
+    for (size_t i = 0; i <= start_index; ++i)
+    {
+        if (current_substr + strlen(value) >= str->raw + str->length)
+        {
+            return -1;
+        }
+        current_substr = strstr(current_substr, value);
+        result = current_substr - str->raw;
+        current_substr += strlen(value);
+    }
+    return result >= 0 ? result : -1;
 }
 
 void cs_free(String* self)

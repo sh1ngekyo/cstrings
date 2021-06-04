@@ -143,3 +143,22 @@ CTEST(strings, index_of_last)
     ASSERT_EQUAL(34, cs_indexof_last(str, "cry"));
     cs_free(str);
 }
+
+CTEST(strings, index_of_any)
+{
+    String* str = cs_create("Why do you cry, Willy? Why do you cry? Why, Willy? Why, Willy? Why, Willy? Why?");
+    ASSERT_EQUAL(0, cs_indexof_any(str, "Why", 0));
+    ASSERT_EQUAL('W', cs_get(str, 0));
+    ASSERT_EQUAL(23, cs_indexof_any(str, "Why", 1));
+    ASSERT_EQUAL('W', cs_get(str, 23));
+    ASSERT_EQUAL(39, cs_indexof_any(str, "Why", 2));
+    ASSERT_EQUAL('W', cs_get(str, 39));
+    ASSERT_EQUAL(51, cs_indexof_any(str, "Why", 3));
+    ASSERT_EQUAL('W', cs_get(str, 51));
+    ASSERT_EQUAL(63, cs_indexof_any(str, "Why", 4));
+    ASSERT_EQUAL('W', cs_get(str, 63));
+    ASSERT_EQUAL(75, cs_indexof_any(str, "Why", 5));
+    ASSERT_EQUAL('W', cs_get(str, 75));
+    ASSERT_EQUAL(-1, cs_indexof_any(str, "Why", 6));
+    cs_free(str);
+}
