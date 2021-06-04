@@ -65,4 +65,10 @@ int64_t cscompare(const String* str, const char* raw, bool ignore_case);
 /* @param raw char array */
 void csconcat(String* str, const char* raw);
 
+/* check if string contains substring */
+/* @param str string */
+/* @param raw char array to seek */
+/* @return true if the value occurs within this string, otherwise false. */
+bool cscontains(String* str, const char* value);
+
 #endif

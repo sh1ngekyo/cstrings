@@ -107,3 +107,16 @@ CTEST(strings, concat_str_expand)
     ASSERT_EQUAL(42, cslength(str));
     csfree(str);
 }
+
+CTEST(strings, contains)
+{
+    String* str = cscreate("test");
+    ASSERT_TRUE(cscontains(str, "t"));
+    ASSERT_TRUE(cscontains(str, "e"));
+    ASSERT_TRUE(cscontains(str, "s"));
+    ASSERT_TRUE(cscontains(str, ""));
+    ASSERT_FALSE(cscontains(str, "hello"));
+    ASSERT_FALSE(cscontains(str, "ts"));
+    ASSERT_FALSE(cscontains(str, "test hello"));
+    csfree(str);
+}

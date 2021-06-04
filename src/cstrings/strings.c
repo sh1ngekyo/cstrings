@@ -70,6 +70,11 @@ void csconcat(String* str, const char* raw)
     str->length += strlen(raw);
 }
 
+bool cscontains(String* str, const char* value)
+{
+    return strstr(csraw(str), value) ? true : false;
+}
+
 void csfree(String* self)
 {
     if (self)
