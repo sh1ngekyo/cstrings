@@ -1,4 +1,4 @@
-name: CI
+name: build
 
 on: push
 
@@ -14,6 +14,3 @@ jobs:
 
       - name: Build
         run: make lib
-
-      - name: Tests
-        run: make test && time seq 100 | xargs -I{} -n 1 -P 1 ./cstrings-test

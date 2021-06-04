@@ -1,0 +1,13 @@
+name: tests
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Tests
+        run: make test && time seq 100 | xargs -I{} -n 1 -P 1 ./cstrings-test
