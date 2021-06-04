@@ -55,44 +55,45 @@ String* cs_clone(const String* self);
 
 /* compares string with raw char* */
 /* @param str string */
-/* @param raw char array */
+/* @param value char array */
 /* @param ignore_case ignore args case */
 /* @return size_t that indicates arg2 position in the sort order */
 int64_t cs_compare(const String* str, const char* raw, bool ignore_case);
 
 /* concatenates string with raw char* */
 /* @param str string */
-/* @param raw char array */
-void cs_concat(String* str, const char* raw);
+/* @param value char array */
+void cs_concat(String* str, const char* value);
 
 /* check if string contains substring */
 /* @param str string */
-/* @param raw char array to seek */
+/* @param value char array to seek */
 /* @return true if the value occurs within this string, otherwise false. */
 bool cs_contains(String* str, const char* value);
 
 /* find the index of substring in string */
 /* @param str string */
-/* @param raw char array to seek */
-/* @return non negative value if string contains substring, otherwise -1 */
-int64_t cs_indexof(String* str, const char* value);
-
-/* find the index of substring in string */
-/* @param str string */
-/* @param raw char array to seek */
+/* @param value char array to seek */
 /* @return non negative value if string contains substring, otherwise -1 */
 int64_t cs_indexof(String* str, const char* value);
 
 /* find the index of last substring in string */
 /* @param str string */
-/* @param raw char array to seek */
+/* @param value char array to seek */
 /* @return non negative value if string contains substring, otherwise -1 */
 int64_t cs_indexof_last(String* str, const char* value);
 
 /* find the index of the H-th substring */
 /* @param str string */
-/* @param raw char array to seek */
+/* @param value char array to seek */
+/* @param start_index position number of substring in string */
 /* @return non negative value if string contains substring, otherwise -1 */
 int64_t cs_indexof_any(String* str, const char* value, size_t start_index);
+
+/* insert substring in string by index */
+/* @param str string */
+/* @param raw char array to seek */
+/* @param index position to insertion */
+void cs_insert(String* str, const char* value, size_t index);
 
 #endif

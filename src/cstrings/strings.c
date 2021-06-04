@@ -138,6 +138,25 @@ int64_t cs_indexof_any(String* str, const char* value, size_t start_index)
     return result >= 0 ? result : -1;
 }
 
+void cs_insert(String* str, const char* value, size_t index)
+{
+    if (cs_length(str) == 0)
+    {
+        cs_concat(str, value);
+        return;
+    }
+    if (index < str->length)
+    {
+        if (str->capacity < str->length + strlen(value) + 1)
+        {
+            expand_str_data(str, (str->length + strlen(value) + 1) * 2);
+        }
+        memmove(&str->raw[index + strlen(value)], &str->raw[index], str->length - index + 1);
+        memmove(&str->raw[index], value, strlen(value));
+        str->length += strlen(value);
+    }
+}
+
 void cs_free(String* self)
 {
     if (self)

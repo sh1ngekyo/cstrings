@@ -162,3 +162,21 @@ CTEST(strings, index_of_any)
     ASSERT_EQUAL(-1, cs_indexof_any(str, "Why", 6));
     cs_free(str);
 }
+
+CTEST(strings, insert)
+{
+    String* str = cs_create("test");
+    cs_insert(str, "w", 0);
+    ASSERT_STR("wtest", cs_raw(str));
+    cs_insert(str, "w", 2);
+    ASSERT_STR("wtwest", cs_raw(str));
+    cs_insert(str, "w", 4);
+    ASSERT_STR("wtwewst", cs_raw(str));
+    cs_insert(str, "w", 6);
+    ASSERT_STR("wtwewswt", cs_raw(str));
+    cs_insert(str, "w", 8);
+    ASSERT_STR("wtwewswt", cs_raw(str));
+    cs_insert(str, "1234567890", 4);
+    ASSERT_STR("wtwe1234567890wswt", cs_raw(str));
+    cs_free(str);
+}
