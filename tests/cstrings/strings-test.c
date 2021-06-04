@@ -77,40 +77,33 @@ CTEST(strings, clone)
     csfree(clone);
 }
 
-CTEST(strings, compare_string)
+CTEST(strings, compare)
 {
-    String* str1 = cscreate("test");
-    String* str2 = cscreate("test2");
-    String* str3 = cscreate("tes");
-    String* str4 = cscreate("test");
-    ASSERT_EQUAL(-1, cscompare_string(str1, str2, false));
-    ASSERT_EQUAL(1, cscompare_string(str1, str3, false));
-    ASSERT_EQUAL(0, cscompare_string(str1, str4, false));
-    csfree(str2);
-    csfree(str3);
-    csfree(str4);
-
-    str2 = cscreate("TEST2");
-    str3 = cscreate("TES");
-    str4 = cscreate("TEST");
-    ASSERT_EQUAL(-50, cscompare_string(str1, str2, true));
-    ASSERT_EQUAL(116, cscompare_string(str1, str3, true));
-    ASSERT_EQUAL(0, cscompare_string(str1, str4, true));
-
-    csfree(str1);
-    csfree(str2);
-    csfree(str3);
-    csfree(str4);
+    String* str = cscreate("test");
+    ASSERT_EQUAL(-1, cscompare(str, "test2", false));
+    ASSERT_EQUAL(1, cscompare(str, "tes", false));
+    ASSERT_EQUAL(0, cscompare(str, "test", false));
+    ASSERT_EQUAL(-50, cscompare(str, "TEST2", true));
+    ASSERT_EQUAL(116, cscompare(str, "TES", true));
+    ASSERT_EQUAL(0, cscompare(str, "TEST", true));
+    csfree(str);
 }
 
-CTEST(strings, compare_raw)
+CTEST(strings, concat)
 {
-    String* str1 = cscreate("test");
-    ASSERT_EQUAL(-1, cscompare_raw(str1, "test2", false));
-    ASSERT_EQUAL(1, cscompare_raw(str1, "tes", false));
-    ASSERT_EQUAL(0, cscompare_raw(str1, "test", false));
-    ASSERT_EQUAL(-50, cscompare_raw(str1, "TEST2", true));
-    ASSERT_EQUAL(116, cscompare_raw(str1, "TES", true));
-    ASSERT_EQUAL(0, cscompare_raw(str1, "TEST", true));
-    csfree(str1);
+    String* str = cscreate("hello");
+    csconcat(str, " world!");
+    ASSERT_STR("hello world!", csraw(str));
+    csfree(str);
+}
+
+CTEST(strings, concat_str_expand)
+{
+    String* str = cscreate("hello");
+    ASSERT_EQUAL(15, cscapacity(str));
+    csconcat(str, " world!world!world!world!world!world!");
+    ASSERT_STR("hello world!world!world!world!world!world!", csraw(str));
+    ASSERT_EQUAL((5 + 37 + 1) * 2, cscapacity(str));
+    ASSERT_EQUAL(42, cslength(str));
+    csfree(str);
 }

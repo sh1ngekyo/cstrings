@@ -9,13 +9,13 @@ typedef struct cstring
     size_t capacity;
 } String;
 
-/*static void expand_str_data(String* str, const size_t size)
+static void expand_str_data(String* str, const size_t size)
 {
     void* tmp = realloc(str->raw, size);
     assert(tmp);
     str->capacity = size;
     str->raw = tmp;
-}*/
+}
 
 size_t cslength(const String* self)
 {
@@ -55,14 +55,19 @@ String* csclone(const String* self)
     return cscreate(self->raw);
 }
 
-int64_t cscompare_string(const String* str1, const String* str2, bool ignore_case)
-{
-    return ignore_case ? strcasecmp(csraw(str1), csraw(str2)) : strcmp(csraw(str1), csraw(str2));
-}
-
-int64_t cscompare_raw(const String* str, const char* raw, bool ignore_case)
+int64_t cscompare(const String* str, const char* raw, bool ignore_case)
 {
     return ignore_case ? strcasecmp(csraw(str), raw) : strcmp(csraw(str), raw);
+}
+
+void csconcat(String* str, const char* raw)
+{
+    if (str->length + strlen(raw) + 1 >= str->capacity)
+    {
+        expand_str_data(str, (str->length + strlen(raw) + 1) * 2);
+    }
+    strcat(str->raw, raw);
+    str->length += strlen(raw);
 }
 
 void csfree(String* self)

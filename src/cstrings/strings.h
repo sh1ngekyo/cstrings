@@ -53,18 +53,16 @@ void csset(const String* self, char item, size_t index);
 /* @return cloned string */
 String* csclone(const String* self);
 
-/* compares two string */
-/* @param str1 first string */
-/* @param str2 second string */
-/* @param ignore_case ignore args case */
-/* @return size_t that indicates arg2 position in the sort order */
-int64_t cscompare_string(const String* str1, const String* str2, bool ignore_case);
-
 /* compares string with raw char* */
 /* @param str string */
 /* @param raw char array */
 /* @param ignore_case ignore args case */
 /* @return size_t that indicates arg2 position in the sort order */
-int64_t cscompare_raw(const String* str, const char* raw, bool ignore_case);
+int64_t cscompare(const String* str, const char* raw, bool ignore_case);
+
+/* concatenates string with raw char* */
+/* @param str string */
+/* @param raw char array */
+void csconcat(String* str, const char* raw);
 
 #endif
