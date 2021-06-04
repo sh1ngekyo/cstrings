@@ -55,6 +55,16 @@ String* csclone(const String* self)
     return cscreate(self->raw);
 }
 
+int64_t cscompare_string(const String* str1, const String* str2, bool ignore_case)
+{
+    return ignore_case ? strcasecmp(csraw(str1), csraw(str2)) : strcmp(csraw(str1), csraw(str2));
+}
+
+int64_t cscompare_raw(const String* str, const char* raw, bool ignore_case)
+{
+    return ignore_case ? strcasecmp(csraw(str), raw) : strcmp(csraw(str), raw);
+}
+
 void csfree(String* self)
 {
     if (self)
