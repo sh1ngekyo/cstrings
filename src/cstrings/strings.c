@@ -32,6 +32,24 @@ const char* csraw(const String* self)
     return self->raw;
 }
 
+char csget(const String* self, size_t index)
+{
+    if (index >= self->length)
+    {
+        return -1;
+    }
+    return self->raw[index];
+}
+
+void csset(const String* self, char item, size_t index)
+{
+    if (index >= self->length)
+    {
+        return;
+    }
+    self->raw[index] = item;
+}
+
 void csfree(String* self)
 {
     if (self)
@@ -61,13 +79,13 @@ String* csinit(size_t init_cap)
     return NULL;
 }
 
-String* cscreate(const char* source)
+String* cscreate(const char* raw)
 {
-    if (strlen(source) > 0)
+    if (strlen(raw) > 0)
     {
-        String* s = csinit(strlen(source) + 10);
-        memcpy(s->raw, source, strlen(source) + 1);
-        s->length = strlen(source);
+        String* s = csinit(strlen(raw) + 10);
+        memcpy(s->raw, raw, strlen(raw) + 1);
+        s->length = strlen(raw);
         return s;
     }
     return csinit(10);
