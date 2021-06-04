@@ -71,4 +71,10 @@ void csconcat(String* str, const char* raw);
 /* @return true if the value occurs within this string, otherwise false. */
 bool cscontains(String* str, const char* value);
 
+/* find the index of substring in string */
+/* @param str string */
+/* @param raw char array to seek */
+/* @return non negative value if string contains substring, otherwise -1 */
+int64_t csindexof(String* str, const char* value);
+
 #endif

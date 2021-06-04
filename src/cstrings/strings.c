@@ -75,6 +75,12 @@ bool cscontains(String* str, const char* value)
     return strstr(csraw(str), value) ? true : false;
 }
 
+int64_t csindexof(String* str, const char* value)
+{
+    int64_t result = strstr(csraw(str), value) - csraw(str);
+    return result >= 0 ? result : -1;
+}
+
 void csfree(String* self)
 {
     if (self)

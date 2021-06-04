@@ -120,3 +120,16 @@ CTEST(strings, contains)
     ASSERT_FALSE(cscontains(str, "test hello"));
     csfree(str);
 }
+
+CTEST(strings, index_of)
+{
+    String* str = cscreate("test");
+    ASSERT_EQUAL(0, csindexof(str, "test"));
+    ASSERT_EQUAL(1, csindexof(str, "est"));
+    ASSERT_EQUAL(2, csindexof(str, "st"));
+    ASSERT_EQUAL(0, csindexof(str, "t"));
+    ASSERT_EQUAL(-1, csindexof(str, "test1"));
+    ASSERT_EQUAL(0, csindexof(str, ""));
+    ASSERT_EQUAL(-1, csindexof(str, "123"));
+    csfree(str);
+}
