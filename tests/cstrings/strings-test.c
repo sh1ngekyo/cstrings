@@ -207,3 +207,18 @@ CTEST(strings, append)
     ASSERT_STR("testabcdefghijklmno", cs_raw(str));
     cs_free(str);
 }
+
+CTEST(strings, replace)
+{
+    String* str = cs_create("test test test test");
+    String* replaced = cs_replace(str, " ", "");
+    ASSERT_STR("testtesttesttest", cs_raw(replaced));
+    cs_free(replaced);
+    replaced = cs_replace(str, "", "test");
+    ASSERT_STR("test test test test", cs_raw(replaced));
+    cs_free(replaced);
+    replaced = cs_replace(str, "qwerty", "poiuy");
+    ASSERT_STR("test test test test", cs_raw(replaced));
+    cs_free(replaced);
+    cs_free(str);
+}

@@ -186,6 +186,37 @@ void cs_remove_all(String* str, size_t index)
     }
 }
 
+String* cs_replace(String* str, const char* old_value, const char* new_value)
+{
+    if (!str || !old_value || !new_value)
+    {
+        return NULL;
+    }
+    char* old_sub = strstr(str->raw, old_value);
+    if (!old_sub || strlen(old_sub) == 0 || strlen(old_value) == 0)
+    {
+        return cs_clone(str);
+    }
+    String* out = cs_init(cs_capacity(str));
+    size_t pos = 0;
+    size_t len = str->length;
+    while (old_sub)
+    {
+        while (pos < old_sub - str->raw)
+        {
+            cs_append(out, cs_get(str, pos++));
+        }
+        cs_concat(out, new_value);
+        old_sub = strstr(old_sub + strlen(old_value), old_value);
+        pos += strlen(old_value);
+    }
+    while (pos < len)
+    {
+        cs_append(out, cs_get(str, pos++));
+    }
+    return out;
+}
+
 void cs_free(String* self)
 {
     if (self)

@@ -106,4 +106,10 @@ void cs_insert(String* str, const char* value, size_t index);
 /* @param index position to remove */
 void cs_remove_all(String* str, size_t index);
 
+/* replace substring on new substring */
+/* @param str string */
+/* @param index position to remove */
+/* @return replaced string */
+String* cs_replace(String* str, const char* old_value, const char* new_value);
+
 #endif
