@@ -16,4 +16,4 @@ jobs:
         run: make lib
 
       - name: Tests
-        run: make test && time seq 100 | xargs -I{} -n 1 -P 1 ./converter-test
+        run: make test && time seq 100 | xargs -I{} -n 1 -P 1 ./cstrings-test
