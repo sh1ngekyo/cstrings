@@ -65,6 +65,11 @@ int64_t cs_compare(const String* str, const char* raw, bool ignore_case);
 /* @param value char array */
 void cs_concat(String* str, const char* value);
 
+/* append char to string */
+/* @param str string */
+/* @param item char */
+void cs_append(String* str, char item);
+
 /* check if string contains substring */
 /* @param str string */
 /* @param value char array to seek */

@@ -82,6 +82,16 @@ void cs_concat(String* str, const char* raw)
     str->length += strlen(raw);
 }
 
+void cs_append(String* str, char item)
+{
+    if (str->length + 1 >= str->capacity)
+    {
+        expand_str_data(str, (1 + str->capacity) * 2);
+    }
+    str->raw[str->length++] = item;
+    str->raw[str->length] = '\0';
+}
+
 bool cs_contains(String* str, const char* value)
 {
     if (!str)

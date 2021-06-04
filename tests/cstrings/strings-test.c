@@ -196,3 +196,14 @@ CTEST(strings, remove_all)
     ASSERT_STR("", cs_raw(str));
     cs_free(str);
 }
+
+CTEST(strings, append)
+{
+    String* str = cs_create("test");
+    for (size_t i = 'a'; i < 'p'; ++i)
+    {
+        cs_append(str, i);
+    }
+    ASSERT_STR("testabcdefghijklmno", cs_raw(str));
+    cs_free(str);
+}
