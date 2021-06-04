@@ -17,22 +17,22 @@ static void expand_str_data(String* str, const size_t size)
     str->raw = tmp;
 }
 
-size_t cslength(const String* self)
+size_t cs_length(const String* self)
 {
     return self->length;
 }
 
-size_t cscapacity(const String* self)
+size_t cs_capacity(const String* self)
 {
     return self->capacity;
 }
 
-const char* csraw(const String* self)
+const char* cs_raw(const String* self)
 {
     return self->raw;
 }
 
-char csget(const String* self, size_t index)
+char cs_get(const String* self, size_t index)
 {
     if (index >= self->length)
     {
@@ -41,7 +41,7 @@ char csget(const String* self, size_t index)
     return self->raw[index];
 }
 
-void csset(const String* self, char item, size_t index)
+void cs_set(const String* self, char item, size_t index)
 {
     if (index >= self->length)
     {
@@ -50,17 +50,17 @@ void csset(const String* self, char item, size_t index)
     self->raw[index] = item;
 }
 
-String* csclone(const String* self)
+String* cs_clone(const String* self)
 {
-    return cscreate(self->raw);
+    return cs_create(self->raw);
 }
 
-int64_t cscompare(const String* str, const char* raw, bool ignore_case)
+int64_t cs_compare(const String* str, const char* raw, bool ignore_case)
 {
-    return ignore_case ? strcasecmp(csraw(str), raw) : strcmp(csraw(str), raw);
+    return ignore_case ? strcasecmp(str->raw, raw) : strcmp(str->raw, raw);
 }
 
-void csconcat(String* str, const char* raw)
+void cs_concat(String* str, const char* raw)
 {
     if (str->length + strlen(raw) + 1 >= str->capacity)
     {
@@ -70,18 +70,18 @@ void csconcat(String* str, const char* raw)
     str->length += strlen(raw);
 }
 
-bool cscontains(String* str, const char* value)
+bool cs_contains(String* str, const char* value)
 {
-    return strstr(csraw(str), value) ? true : false;
+    return strstr(str->raw, value) ? true : false;
 }
 
-int64_t csindexof(String* str, const char* value)
+int64_t cs_indexof(String* str, const char* value)
 {
-    int64_t result = strstr(csraw(str), value) - csraw(str);
+    int64_t result = strstr(str->raw, value) - str->raw;
     return result >= 0 ? result : -1;
 }
 
-void csfree(String* self)
+void cs_free(String* self)
 {
     if (self)
     {
@@ -94,7 +94,7 @@ void csfree(String* self)
     }
 }
 
-String* csinit(size_t init_cap)
+String* cs_init(size_t init_cap)
 {
     if (init_cap > 0)
     {
@@ -110,14 +110,14 @@ String* csinit(size_t init_cap)
     return NULL;
 }
 
-String* cscreate(const char* raw)
+String* cs_create(const char* raw)
 {
     if (strlen(raw) > 0)
     {
-        String* s = csinit(strlen(raw) + 10);
+        String* s = cs_init(strlen(raw) + 10);
         memcpy(s->raw, raw, strlen(raw) + 1);
         s->length = strlen(raw);
         return s;
     }
-    return csinit(10);
+    return cs_init(10);
 }

@@ -3,133 +3,133 @@
 
 CTEST(strings, init)
 {
-    String* s = csinit(10);
+    String* s = cs_init(10);
     ASSERT_NOT_NULL(s);
-    csfree(s);
+    cs_free(s);
 }
 
 CTEST(strings, length)
 {
-    String* s = csinit(10);
-    ASSERT_EQUAL(0, cslength(s));
-    csfree(s);
+    String* s = cs_init(10);
+    ASSERT_EQUAL(0, cs_length(s));
+    cs_free(s);
 }
 
 CTEST(strings, capacity)
 {
-    String* s = csinit(10);
-    ASSERT_EQUAL(10, cscapacity(s));
-    csfree(s);
+    String* s = cs_init(10);
+    ASSERT_EQUAL(10, cs_capacity(s));
+    cs_free(s);
 }
 
 CTEST(strings, create)
 {
     char raw[] = "10";
-    String* s = cscreate(raw);
+    String* s = cs_create(raw);
     ASSERT_NOT_NULL(s);
-    ASSERT_STR(raw, csraw(s));
-    ASSERT_EQUAL(sizeof(raw) / sizeof(char) - 1, cslength(s));
-    ASSERT_EQUAL(sizeof(raw) / sizeof(char) - 1 + 10, cscapacity(s));
-    csfree(s);
+    ASSERT_STR(raw, cs_raw(s));
+    ASSERT_EQUAL(sizeof(raw) / sizeof(char) - 1, cs_length(s));
+    ASSERT_EQUAL(sizeof(raw) / sizeof(char) - 1 + 10, cs_capacity(s));
+    cs_free(s);
 }
 
 CTEST(strings, create_empty)
 {
-    String* s = cscreate("");
-    ASSERT_STR("", csraw(s));
-    ASSERT_EQUAL(0, cslength(s));
-    csfree(s);
+    String* s = cs_create("");
+    ASSERT_STR("", cs_raw(s));
+    ASSERT_EQUAL(0, cs_length(s));
+    cs_free(s);
 }
 
 CTEST(strings, set)
 {
     char raw[] = "test";
-    String* s = cscreate(raw);
-    ASSERT_EQUAL(4, cslength(s));
-    for (size_t i = 0; i < cslength(s); ++i)
+    String* s = cs_create(raw);
+    ASSERT_EQUAL(4, cs_length(s));
+    for (size_t i = 0; i < cs_length(s); ++i)
     {
-        csset(s, i + '0', i);
+        cs_set(s, i + '0', i);
     }
-    ASSERT_STR("0123", csraw(s));
-    csfree(s);
+    ASSERT_STR("0123", cs_raw(s));
+    cs_free(s);
 }
 
 CTEST(strings, get)
 {
     char raw[] = "test";
-    String* s = cscreate(raw);
-    ASSERT_EQUAL(4, cslength(s));
-    for (size_t i = 0; i < cslength(s); ++i)
+    String* s = cs_create(raw);
+    ASSERT_EQUAL(4, cs_length(s));
+    for (size_t i = 0; i < cs_length(s); ++i)
     {
-        ASSERT_EQUAL(raw[i], csget(s, i));
+        ASSERT_EQUAL(raw[i], cs_get(s, i));
     }
-    csfree(s);
+    cs_free(s);
 }
 
 CTEST(strings, clone)
 {
     char raw[] = "test";
-    String* s = cscreate(raw);
-    String* clone = csclone(s);
-    ASSERT_STR(csraw(clone), csraw(s));
-    ASSERT_EQUAL(cslength(s), cslength(clone));
-    csfree(s);
-    csfree(clone);
+    String* s = cs_create(raw);
+    String* clone = cs_clone(s);
+    ASSERT_STR(cs_raw(clone), cs_raw(s));
+    ASSERT_EQUAL(cs_length(s), cs_length(clone));
+    cs_free(s);
+    cs_free(clone);
 }
 
 CTEST(strings, compare)
 {
-    String* str = cscreate("test");
-    ASSERT_EQUAL(-1, cscompare(str, "test2", false));
-    ASSERT_EQUAL(1, cscompare(str, "tes", false));
-    ASSERT_EQUAL(0, cscompare(str, "test", false));
-    ASSERT_EQUAL(-50, cscompare(str, "TEST2", true));
-    ASSERT_EQUAL(116, cscompare(str, "TES", true));
-    ASSERT_EQUAL(0, cscompare(str, "TEST", true));
-    csfree(str);
+    String* str = cs_create("test");
+    ASSERT_EQUAL(-1, cs_compare(str, "test2", false));
+    ASSERT_EQUAL(1, cs_compare(str, "tes", false));
+    ASSERT_EQUAL(0, cs_compare(str, "test", false));
+    ASSERT_EQUAL(-50, cs_compare(str, "TEST2", true));
+    ASSERT_EQUAL(116, cs_compare(str, "TES", true));
+    ASSERT_EQUAL(0, cs_compare(str, "TEST", true));
+    cs_free(str);
 }
 
 CTEST(strings, concat)
 {
-    String* str = cscreate("hello");
-    csconcat(str, " world!");
-    ASSERT_STR("hello world!", csraw(str));
-    csfree(str);
+    String* str = cs_create("hello");
+    cs_concat(str, " world!");
+    ASSERT_STR("hello world!", cs_raw(str));
+    cs_free(str);
 }
 
 CTEST(strings, concat_str_expand)
 {
-    String* str = cscreate("hello");
-    ASSERT_EQUAL(15, cscapacity(str));
-    csconcat(str, " world!world!world!world!world!world!");
-    ASSERT_STR("hello world!world!world!world!world!world!", csraw(str));
-    ASSERT_EQUAL((5 + 37 + 1) * 2, cscapacity(str));
-    ASSERT_EQUAL(42, cslength(str));
-    csfree(str);
+    String* str = cs_create("hello");
+    ASSERT_EQUAL(15, cs_capacity(str));
+    cs_concat(str, " world!world!world!world!world!world!");
+    ASSERT_STR("hello world!world!world!world!world!world!", cs_raw(str));
+    ASSERT_EQUAL((5 + 37 + 1) * 2, cs_capacity(str));
+    ASSERT_EQUAL(42, cs_length(str));
+    cs_free(str);
 }
 
 CTEST(strings, contains)
 {
-    String* str = cscreate("test");
-    ASSERT_TRUE(cscontains(str, "t"));
-    ASSERT_TRUE(cscontains(str, "e"));
-    ASSERT_TRUE(cscontains(str, "s"));
-    ASSERT_TRUE(cscontains(str, ""));
-    ASSERT_FALSE(cscontains(str, "hello"));
-    ASSERT_FALSE(cscontains(str, "ts"));
-    ASSERT_FALSE(cscontains(str, "test hello"));
-    csfree(str);
+    String* str = cs_create("test");
+    ASSERT_TRUE(cs_contains(str, "t"));
+    ASSERT_TRUE(cs_contains(str, "e"));
+    ASSERT_TRUE(cs_contains(str, "s"));
+    ASSERT_TRUE(cs_contains(str, ""));
+    ASSERT_FALSE(cs_contains(str, "hello"));
+    ASSERT_FALSE(cs_contains(str, "ts"));
+    ASSERT_FALSE(cs_contains(str, "test hello"));
+    cs_free(str);
 }
 
 CTEST(strings, index_of)
 {
-    String* str = cscreate("test");
-    ASSERT_EQUAL(0, csindexof(str, "test"));
-    ASSERT_EQUAL(1, csindexof(str, "est"));
-    ASSERT_EQUAL(2, csindexof(str, "st"));
-    ASSERT_EQUAL(0, csindexof(str, "t"));
-    ASSERT_EQUAL(-1, csindexof(str, "test1"));
-    ASSERT_EQUAL(0, csindexof(str, ""));
-    ASSERT_EQUAL(-1, csindexof(str, "123"));
-    csfree(str);
+    String* str = cs_create("test");
+    ASSERT_EQUAL(0, cs_indexof(str, "test"));
+    ASSERT_EQUAL(1, cs_indexof(str, "est"));
+    ASSERT_EQUAL(2, cs_indexof(str, "st"));
+    ASSERT_EQUAL(0, cs_indexof(str, "t"));
+    ASSERT_EQUAL(-1, cs_indexof(str, "test1"));
+    ASSERT_EQUAL(0, cs_indexof(str, ""));
+    ASSERT_EQUAL(-1, cs_indexof(str, "123"));
+    cs_free(str);
 }
