@@ -92,8 +92,13 @@ int64_t cs_indexof_any(String* str, const char* value, size_t start_index);
 
 /* insert substring in string by index */
 /* @param str string */
-/* @param raw char array to seek */
-/* @param index position to insertion */
+/* @param value char array to insertion */
+/* @param index position of insertion */
 void cs_insert(String* str, const char* value, size_t index);
+
+/* remove all elements after index */
+/* @param str string */
+/* @param index position to remove */
+void cs_remove_all(String* str, size_t index);
 
 #endif

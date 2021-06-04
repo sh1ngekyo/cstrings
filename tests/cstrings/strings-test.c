@@ -180,3 +180,19 @@ CTEST(strings, insert)
     ASSERT_STR("wtwe1234567890wswt", cs_raw(str));
     cs_free(str);
 }
+
+CTEST(strings, remove_all)
+{
+    String* str = cs_create("test test");
+    cs_remove_all(str, 6);
+    ASSERT_STR("test t", cs_raw(str));
+    cs_remove_all(str, 4);
+    ASSERT_STR("test", cs_raw(str));
+    cs_remove_all(str, 1);
+    ASSERT_STR("t", cs_raw(str));
+    cs_remove_all(str, 0);
+    ASSERT_STR("", cs_raw(str));
+    cs_remove_all(str, 100);
+    ASSERT_STR("", cs_raw(str));
+    cs_free(str);
+}

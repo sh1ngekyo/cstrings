@@ -157,6 +157,25 @@ void cs_insert(String* str, const char* value, size_t index)
     }
 }
 
+void cs_remove_all(String* str, size_t index)
+{
+    if (!str)
+    {
+        return;
+    }
+    if (index < str->length)
+    {
+        size_t new_size = str->length - (str->length - index);
+        char* new_raw = malloc((new_size + 1) * 2);
+        memcpy(new_raw, str->raw, new_size);
+        free(str->raw);
+        str->raw = new_raw;
+        str->capacity = (new_size + 1) * 2;
+        str->length = new_size + 1;
+        str->raw[str->length - 1] = '\0';
+    }
+}
+
 void cs_free(String* self)
 {
     if (self)
