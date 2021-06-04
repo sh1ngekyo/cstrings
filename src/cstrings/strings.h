@@ -77,4 +77,16 @@ bool cs_contains(String* str, const char* value);
 /* @return non negative value if string contains substring, otherwise -1 */
 int64_t cs_indexof(String* str, const char* value);
 
+/* find the index of substring in string */
+/* @param str string */
+/* @param raw char array to seek */
+/* @return non negative value if string contains substring, otherwise -1 */
+int64_t cs_indexof(String* str, const char* value);
+
+/* find the index of last substring in string */
+/* @param str string */
+/* @param raw char array to seek */
+/* @return non negative value if string contains substring, otherwise -1 */
+int64_t cs_indexof_last(String* str, const char* value);
+
 #endif

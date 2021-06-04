@@ -133,3 +133,13 @@ CTEST(strings, index_of)
     ASSERT_EQUAL(-1, cs_indexof(str, "123"));
     cs_free(str);
 }
+
+CTEST(strings, index_of_last)
+{
+    String* str = cs_create("Why do you cry, Willy? Why do you cry? Why, Willy? Why, Willy? Why, Willy? Why?");
+    ASSERT_EQUAL(75, cs_indexof_last(str, "Why"));
+    ASSERT_EQUAL(68, cs_indexof_last(str, "Willy"));
+    ASSERT_EQUAL(-1, cs_indexof_last(str, "test"));
+    ASSERT_EQUAL(34, cs_indexof_last(str, "cry"));
+    cs_free(str);
+}

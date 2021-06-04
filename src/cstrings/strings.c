@@ -81,6 +81,18 @@ int64_t cs_indexof(String* str, const char* value)
     return result >= 0 ? result : -1;
 }
 
+int64_t cs_indexof_last(String* str, const char* value)
+{
+    int64_t result = -1;
+    char* current_substr = str->raw;
+    while ((current_substr = strstr(current_substr, value)) != NULL)
+    {
+        result = current_substr - str->raw;
+        current_substr += strlen(value);
+    }
+    return result;
+}
+
 void cs_free(String* self)
 {
     if (self)
