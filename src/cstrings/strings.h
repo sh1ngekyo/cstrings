@@ -120,4 +120,8 @@ String* cs_replace(String* str, const char* old_value, const char* new_value);
 /* @return length of container after split original string */
 size_t cs_split(const String* str, const char* pattern, String*** container);
 
+/* clear string's data */
+/* @param self string */
+void cs_clear(String* self);
+
 #endif

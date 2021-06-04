@@ -252,3 +252,11 @@ CTEST(strings, split)
     free(container);
     cs_free(str);
 }
+
+CTEST(strings, clear)
+{
+    String* str = cs_create("test");
+    cs_clear(str);
+    ASSERT_STR("", cs_raw(str));
+    cs_free(str);
+}

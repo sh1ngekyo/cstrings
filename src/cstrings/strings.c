@@ -244,6 +244,20 @@ void cs_free(String* self)
     }
 }
 
+void cs_clear(String* self)
+{
+    if (self)
+    {
+        if (self->raw)
+        {
+            free(self->raw);
+            self->raw = malloc(self->capacity);
+            self->length = 0;
+            self->raw[self->length] = 0;
+        }
+    }
+}
+
 String* cs_init(size_t init_cap)
 {
     if (init_cap > 0)
